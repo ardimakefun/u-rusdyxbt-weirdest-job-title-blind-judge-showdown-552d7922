@@ -6,5 +6,14 @@ import { mkdirSync, writeFileSync } from "node:fs";
 
 const TITLE = "Senior Vice President of Apologizing to Geese";
 
+// The gate rejects any entry that is not UTF-8 text of 1 to 60 characters,
+// so fail loudly here instead of silently shipping an invalid entry.
+const MAX_LENGTH = 60;
+if (TITLE.length < 1 || TITLE.length > MAX_LENGTH) {
+  throw new Error(
+    `Invalid job title: ${TITLE.length} characters, must be 1-${MAX_LENGTH}`,
+  );
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", TITLE, "utf8");
